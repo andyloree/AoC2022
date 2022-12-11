@@ -79,7 +79,8 @@ fn main() {
         comm.execute_instruction(line.to_string());
     }
     let signal_sum: i32 = comm.signals.iter().sum();
-    println!("Signal sum: {}", signal_sum);
+    println!("Signal sum: {}\r\n", signal_sum);
 
+    println!("Part 2\r\n{}", "-".repeat(10));
     comm.render();
 }
