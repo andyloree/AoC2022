@@ -24,7 +24,7 @@ struct MonkeyTroop {
 
 impl Monkey {
     fn new(lines: &[String], worry_divisor: Option<u64>) -> Self {
-        let mut items = (lines[1].split(":").nth(1).unwrap().split(",")).map(|item| item.trim().parse::<u64>().unwrap()).collect::<Vec<u64>>();
+        let items = (lines[1].split(":").nth(1).unwrap().split(",")).map(|item| item.trim().parse::<u64>().unwrap()).collect::<Vec<u64>>();
         
         // Literal and operation type
         let mut op = OpType::AddLiteral;
@@ -45,7 +45,7 @@ impl Monkey {
         let false_monkey = lines[5].split("to monkey ").nth(1).unwrap().trim().parse::<usize>().unwrap();
 
 
-        let mut monkey = Monkey { items: items, operation: op, literal: literal, divisible: divisible, number_inspections: 0, true_monkey: true_monkey, false_monkey: false_monkey, worry_divisor: worry_divisor, worry_lcm: None};
+        let monkey = Monkey { items: items, operation: op, literal: literal, divisible: divisible, number_inspections: 0, true_monkey: true_monkey, false_monkey: false_monkey, worry_divisor: worry_divisor, worry_lcm: None};
         return monkey;
     }
 
@@ -119,21 +119,6 @@ impl MonkeyTroop {
 
 }
 
-
-struct WorryLevel {
-    number: u64,
-    divisors: Vec<(u64, u64)>
-}
-
-impl WorryLevel {
-    fn multiple(&mut self, literal: u64) {
-        self.number = self.number * literal;
-        for idx in 0..self.divisors.len() {
-            self.divisors[idx].1 = self.divisors[idx].1 * literal;
-        }
-    }
-}
-
 /// Least common multiple vec of numbers
 fn lcm(numbers: Vec<u64>) -> u64 {
     let mut temp = numbers.clone();
@@ -172,7 +157,7 @@ fn main() {
     for _ in 0..20 {
         troop.round();
     }
-    println!("Monkey business: {}", troop.monkey_business_level());
+    println!("Monkey business: {}\r\n", troop.monkey_business_level());
 
     let mut troop = MonkeyTroop::new(lines, None );
     println!("Part 2\r\n{}", "-".repeat(10));
